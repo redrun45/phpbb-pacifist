@@ -1,0 +1,33 @@
+/* Notice class with higher text contrast */
+.pacifist_notice {
+  background-color: #DDEEFF;
+  color: #111100;
+}
+.pacifist_notice .a, .pacifist_notice .a:visited {
+  color: #000033;
+}
+
+/* Mild warning class */
+.pacifist_warning {
+  background-color: #FFEBBB;
+  color: #110011;
+}
+
+/* A box that stands out */
+.pacifist_callout {
+  padding: 1em;
+  border: dashed;
+  border-width: thin;
+}
+
+/* A bit more room for text on the left half of the form */
+fieldset dt {
+  width: 60%;
+}
+fieldset dd {
+  margin-left: 60%;
+  width: 40%;
+}
+dd label {
+  white-space: wrap;
+}

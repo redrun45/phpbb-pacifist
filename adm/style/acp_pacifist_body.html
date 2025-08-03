@@ -1,0 +1,89 @@
+{% include 'overall_header.html' %}
+{% INCLUDECSS '@redrun45_pacifist/acp_pacifist.css' %}
+
+<h1>{{ lang('ACP_PACIFIST_TITLE') }}</h1>
+
+{% if S_ERROR %}
+	<div class="errorbox">
+		<h3>{{ lang('WARNING') }}</h3>
+		<p>{{ ERROR_MSG }}</p>
+	</div>
+{% endif %}
+
+<p>{{ lang('ACP_PACIFIST_EXPLAIN_BAD_BOTS') }}</p>
+<p>{{ lang('ACP_PACIFIST_EXPLAIN_PERCENT_BUSY') ~ lang('COLON') }} {{ PACIFIST_CURRENT_PERCENT_BUSY }}%<p>
+<div class="pacifist_notice pacifist_callout">* {{ lang('ACP_PACIFIST_EXPLAIN_CUSTOM_CODE') ~ lang('COLON') }} <a href="https://github.com/redrun45/phpbb-pacifist#custom-code">{{ lang('ACP_PACIFIST_README_LABEL') }}</a></div>
+<form id="pacifist_acp" name="pacifist_acp" method="post" action="{{ U_ACTION }}">
+	<fieldset>
+		<legend>{{ lang('SETTINGS') }}</legend>
+		<dl>
+			<dt><label for="pacifist_send_401_on_auth_required">{{ lang('ACP_PACIFIST_SEND_401_ON_AUTH_REQUIRED') ~ lang('COLON') }}</label>
+        <div>{{ lang('ACP_PACIFIST_EXPLAIN_SEND_401_ON_AUTH_REQUIRED') }}</div>
+      </dt>
+			<dd>
+				<label><input type="radio" class="radio" name="pacifist_send_401_on_auth_required" value="0"{% if not PACIFIST_SEND_401_ON_AUTH_REQUIRED %} checked="checked"{% endif %}> {{ lang('ACP_PACIFIST_NEVER') }}</label>
+				<label><input type="radio" class="radio" name="pacifist_send_401_on_auth_required" value="-1"{% if PACIFIST_SEND_401_ON_AUTH_REQUIRED == -1 %} checked="checked"{% endif %}> {{ lang('ACP_PACIFIST_ALWAYS') }}</label>
+			</dd>
+		</dl>
+    <dl>
+			<dt><label for="pacifist_suppress_sids_in_links">{{ lang('ACP_PACIFIST_SUPPRESS_SIDS_IN_LINKS') ~ lang('COLON') }}</label>
+        <div>{{ lang('ACP_PACIFIST_EXPLAIN_SUPPRESS_SIDS_IN_LINKS') }}</div>
+      </dt>
+			<dd>
+				<label><input type="radio" class="radio" name="pacifist_suppress_sids_in_links" value="0"{% if not PACIFIST_SUPPRESS_SIDS_IN_LINKS %} checked="checked"{% endif %}> {{ lang('ACP_PACIFIST_NEVER') }}</label>
+				<label><input type="radio" class="radio" name="pacifist_suppress_sids_in_links" value="-1"{% if PACIFIST_SUPPRESS_SIDS_IN_LINKS == -1 %} checked="checked"{% endif %}> {{ lang('ACP_PACIFIST_ALWAYS') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="pacifist_redirect_on_sid">{{ lang('ACP_PACIFIST_REDIRECT_ON_SID') ~ lang('COLON') }}</label>
+        <div>{{ lang('ACP_PACIFIST_EXPLAIN_REDIRECT_ON_SID') }}</div>
+        <div class="pacifist_notice">* {{ lang('ACP_PACIFIST_LABEL_CUSTOM_CODE') }}</div>
+      </dt>
+			<dd>
+				<label><input type="radio" class="radio" name="pacifist_redirect_on_sid" value="0"{% if not PACIFIST_REDIRECT_ON_SID %} checked="checked"{% endif %}> {{ lang('ACP_PACIFIST_NEVER') }}</label>
+				<label><input type="radio" class="radio" name="pacifist_redirect_on_sid" value="-1"{% if PACIFIST_REDIRECT_ON_SID == -1 %} checked="checked"{% endif %}> {{ lang('ACP_PACIFIST_ALWAYS') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="pacifist_disable_guest_tracking">{{ lang('ACP_PACIFIST_DISABLE_GUEST_TRACKING') ~ lang('COLON') }}</label>
+        <div>{{ lang('ACP_PACIFIST_EXPLAIN_DISABLE_GUEST_TRACKING') }}</div>
+        <div class="pacifist_notice">* {{ lang('ACP_PACIFIST_LABEL_CUSTOM_CODE') }}</div>
+        <div class="pacifist_warning">{{ lang('ACP_PACIFIST_WARN_DISABLE_GUEST_TRACKING') }}</div>
+      </dt>
+			<dd>
+        <label>{{ lang('ACP_PACIFIST_WHEN_BUSY') ~ lang('COLON') }}<br>
+          <input type="number" min="-1" max="100" name="pacifist_disable_guest_tracking" value="{{ PACIFIST_DISABLE_GUEST_TRACKING }}"/><br />
+        {{ lang('ACP_PACIFIST_LABEL_WHEN_BUSY') }}</label>
+			</dd>
+		</dl>
+    <dl>
+			<dt><label for="pacifist_defer_known_bots">{{ lang('ACP_PACIFIST_DEFER_KNOWN_BOTS') ~ lang('COLON') }}</label>
+        <div>{{ lang('ACP_PACIFIST_EXPLAIN_DEFER_KNOWN_BOTS') }}</div>
+      </dt>
+			<dd>
+        <label>{{ lang('ACP_PACIFIST_WHEN_BUSY') ~ lang('COLON') }}<br>
+          <input type="number" min="-1" max="100" name="pacifist_defer_known_bots" value="{{ PACIFIST_DEFER_KNOWN_BOTS }}"/><br />
+        {{ lang('ACP_PACIFIST_LABEL_WHEN_BUSY') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="pacifist_require_login">{{ lang('ACP_PACIFIST_REQUIRE_LOGIN') ~ lang('COLON') }}</label>
+        <div>{{ lang('ACP_PACIFIST_EXPLAIN_REQUIRE_LOGIN') }}</div>
+        <div class="pacifist_notice">* {{ lang('ACP_PACIFIST_LABEL_CUSTOM_CODE') }}</div>
+      </dt>
+			<dd>
+        <label>{{ lang('ACP_PACIFIST_WHEN_BUSY') ~ lang('COLON') }}<br>
+          <input type="number" min="-1" max="100" name="pacifist_require_login" value="{{ PACIFIST_REQUIRE_LOGIN }}"/><br />
+        {{ lang('ACP_PACIFIST_LABEL_WHEN_BUSY') }}</label>
+			</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">&nbsp;
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+
+</form>
+
+{% include 'overall_footer.html' %}

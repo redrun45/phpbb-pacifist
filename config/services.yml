@@ -1,0 +1,18 @@
+services:
+    redrun45.pacifist.controller.acp:
+        class: redrun45\pacifist\controller\acp_controller
+        arguments:
+            - '@config'
+            - '@language'
+            - '@log'
+            - '@request'
+            - '@template'
+            - '@user'
+
+    redrun45.pacifist.listener:
+        class: redrun45\pacifist\event\main_listener
+        arguments:
+            - '@config'
+            - '@language'
+        tags:
+            - { name: event.listener }
