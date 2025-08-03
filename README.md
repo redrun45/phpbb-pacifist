@@ -7,9 +7,10 @@ and creating a robots.txt file[^2] first.
 ## Installation
 
 1. Copy the extension to: `phpBB/ext/redrun45/pacifist`
-2. In the ACP, go to: **Customise → Manage extensions**
+2. In the Admin Control Panel (ACP), go to: **Customise → Manage extensions**
 3. Enable the **Pacifist Bot Mitigations** extension
-4. To enable the options that require modifications to phpBB, read on:
+4. To view and enable its modifications, go to **Extensions** up top.
+5. To enable the options that require modifications to phpBB, read on:
 
 ## Custom Code
 
