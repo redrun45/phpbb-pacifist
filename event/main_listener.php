@@ -120,11 +120,15 @@ class main_listener implements EventSubscriberInterface
 	{
 		// Do nothing if this feature is not enabled
 		if (!isset($this->config['pacifist_redirect_on_sid']) or $this->config['pacifist_redirect_on_sid'] == 0)
+		{
 			return;
+		}
 
 		// If we are signed in, user_id will exist.	Otherwise, the visitor might be an unrecognized bot.
 		if (!$event['user_id'])
+		{
 			$event['redirect_other'] = true;
+		}
 	}
 
 
@@ -142,11 +146,15 @@ class main_listener implements EventSubscriberInterface
 			or $this->config['pacifist_disable_guest_tracking'] == 0
 			or ($this->percent_busy and $this->percent_busy < $this->config['pacifist_disable_guest_tracking'])
 		)
+		{
 			return;
+		}
 
 		// If we are not a user, and not a known bot.
 		if ($event['sql_ary']['session_user_id'] === ANONYMOUS && !$event['is_bot'])
+		{
 			$event['use_dummy_session'] = true;
+		}
 	}
 
 
@@ -158,10 +166,10 @@ class main_listener implements EventSubscriberInterface
 	{
 		// Do nothing if this feature is not enabled
 		if (
-				!isset($this->config['pacifist_defer_known_bots'])
-				or $this->config['pacifist_defer_known_bots'] == 0
-				or ($this->percent_busy and $this->percent_busy < $this->config['pacifist_defer_known_bots'])
-			)
+			!isset($this->config['pacifist_defer_known_bots'])
+			or $this->config['pacifist_defer_known_bots'] == 0
+			or ($this->percent_busy and $this->percent_busy < $this->config['pacifist_defer_known_bots'])
+		)
 		{
 			return;
 		}
@@ -169,8 +177,8 @@ class main_listener implements EventSubscriberInterface
 		// The equivalent of phpBB's built-in action when the server is under load - except that we shut it down for ONLY the known bots.
 		// To shut down the forum for unknowns, see require_login() below
 		global $user;
-    if ($user->data['is_bot'])
-    {
+		if ($user->data['is_bot'])
+		{
 			send_status_line(503, 'Unavailable');
 			trigger_error('BOARD_UNAVAILABLE');
 		}
@@ -192,12 +200,21 @@ class main_listener implements EventSubscriberInterface
 			or $this->config['pacifist_require_login'] == 0
 			or ($this->percent_busy and $this->percent_busy < $this->config['pacifist_require_login'])
 		)
+		{
 			return;
+		}
 
 		global $user;
 		global $language;
-		if (!$user->data['is_registered'] and !defined('IN_LOGIN') and $user->page['page_name'] != 'ucp.php' and $user->page['page_name'] != 'app.php/help/faq')
+		if (
+			!$user->data['is_registered']
+			and !defined('IN_LOGIN')
+			and $user->page['page_name'] != 'ucp.php'
+			and $user->page['page_name'] != 'app.php/help/faq'
+		)
+		{
 			login_box('', $language->lang('MSG_PACIFIST_REQUIRE_LOGIN_WHEN_BUSY'));
+		}
 	}
 
 
@@ -225,8 +242,8 @@ class main_listener implements EventSubscriberInterface
 
 		// This is partly borrowed from phpBB/phpbb/session.php -> session_begin(), with a bit of help from a php.net submission.
 		$loadfunc_exists = false; //function_exists('sys_getloadavg');
-    if (($loadfunc_exists or is_readable('/proc/loadavg')) and is_readable('/proc/stat'))
-    {
+		if (($loadfunc_exists or is_readable('/proc/loadavg')) and is_readable('/proc/stat'))
+		{
 
 			// See how many processors we have.
 			$proc_stat = @file_get_contents('/proc/stat');

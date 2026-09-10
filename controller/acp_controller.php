@@ -39,7 +39,7 @@ class acp_controller
 	/** @var string Custom form action */
 	protected $u_action;
 
-	/** @var \redrun45\pacifist\event\main_listener */
+	/** @var listener */
 	protected $listener;
 
 	/**
@@ -80,17 +80,17 @@ class acp_controller
 		$errors = [];
 
 		// Is the form being submitted to us?
-    if ($this->request->is_set_post('submit'))
-    {
+		if ($this->request->is_set_post('submit'))
+		{
 			// Test if the submitted form is valid
-      if (!check_form_key('pacifist_acp'))
-      {
+			if (!check_form_key('pacifist_acp'))
+			{
 				$errors[] = $this->language->lang('FORM_INVALID');
 			}
 
 			// If no errors, process the form data
-      if (empty($errors))
-      {
+			if (empty($errors))
+			{
 				// Set the options the user configured
 				$this->config->set('pacifist_send_401_on_auth_required', $this->request->variable('pacifist_send_401_on_auth_required', 0));
 				$this->config->set('pacifist_suppress_sids_in_links', $this->request->variable('pacifist_suppress_sids_in_links', 0));
